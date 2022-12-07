@@ -1,4 +1,4 @@
-package com.example.workflow.entity;
+package com.example.workflow.model.entity;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

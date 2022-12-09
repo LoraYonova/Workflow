@@ -1,9 +1,6 @@
 package com.example.workflow.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -25,7 +22,7 @@ public class UserEntity extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<RoleEntity> roles;
 
     public UserEntity() {

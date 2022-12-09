@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 
 <head th:fragment="head">
@@ -10,10 +10,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/style.css}">
-
 </head>
 <body>
-<nav th:replace="fragments/common::nav" class="nav"></nav>
+<nav th:replace="fragments/common :: nav" class="nav"></nav>
 <section class="vh-100" style="background-color: #eee;">
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -25,26 +24,29 @@
 
                                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign In</p>
 
-                                <form class="mx-1 mx-md-4">
+                                <form th:action="@{/users/login}" th:method="post" class="mx-1 mx-md-4">
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="text" id="form3Example1c" class="form-control"/>
-                                            <label class="form-label" for="form3Example1c" style="font-size: initial;">Company Name</label>
+                                            <label class="form-label" for="username" style="font-size: 16px;">Username</label>
+                                            <input type="text" id="username" name="username" class="form-control" />
                                         </div>
                                     </div>
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="password" id="form3Example4c" class="form-control"/>
-                                            <label class="form-label" for="form3Example4c" style="font-size: initial;">Password</label>
+                                            <label class="form-label" for="password" style="font-size: 16px;">Password</label>
+                                            <input type="password" id="password" class="form-control"/>
                                         </div>
                                     </div>
+                                    <p th:if="${bad_credentials}" class="'errors alert alert-danger'">
+                                        Invalid username or password!
+                                    </p>
 
                                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                        <button type="button" class="btn btn-primary btn-lg">Login</button>
+                                        <input type="submit" class="btn btn-info btn-lg" value="Login"/>
                                     </div>
 
                                 </form>

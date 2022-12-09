@@ -1,5 +1,8 @@
 package com.example.workflow.model.DTO;
 
+import com.example.workflow.model.validation.UniqueEmail;
+import com.example.workflow.model.validation.UniqueUsername;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -7,19 +10,20 @@ import javax.validation.constraints.Size;
 public class UserRegisterDTO {
 
     @NotEmpty
-//    @UniqueUsername(message = "Username already used!")
+    @UniqueUsername(message = "Username already used!")
     @Size(min = 2, max = 20, message = "Username is required and should be between 2 and 20 characters.")
     private String username;
 
     @NotEmpty
-    @Size(min = 2, max = 20, message = "First name is required and should be between 2 and 20 characters.")
+    @Size(min = 2, max = 20)
     private String firstName;
 
     @NotEmpty
-    @Size(min = 2, max = 20, message = "Last name is required and should be between 2 and 20 characters.")
+    @Size(min = 2, max = 20)
     private String lastName;
 
     @NotEmpty
+    @UniqueEmail(message = "Email already used!")
     @Email(message = "User email should be valid.")
     private String email;
 

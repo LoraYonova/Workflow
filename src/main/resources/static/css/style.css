@@ -70,6 +70,17 @@ body {
     color: #177DED;
 }
 
+.nav div.main_list ul li #logout {
+    text-decoration: none;
+    color: #000;
+    line-height: 65px;
+    font-size: 1.7rem;
+}
+
+.nav div.main_list ul li #logout:hover {
+    color: #177DED;
+}
+
 /* Home section */
 
 .home {

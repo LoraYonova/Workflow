@@ -19,6 +19,18 @@ public class UserEntity extends BaseEntity {
     @Column(nullable = false)
     private String email;
 
+    @OneToOne
+    private PictureEntity picture;
+
+    public PictureEntity getPicture() {
+        return picture;
+    }
+
+    public UserEntity setPicture(PictureEntity picture) {
+        this.picture = picture;
+        return this;
+    }
+
     @Column(nullable = false)
     private String password;
 

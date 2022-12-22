@@ -29,7 +29,7 @@ public class ApplicationSecurityConfiguration {
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/", "/users/register", "/users/login").permitAll()
                 .antMatchers("/admin").hasRole(RoleEnum.ADMIN.name())
-                .antMatchers("/users/tasks/add", "/users/tasks").hasRole(RoleEnum.USER.name())
+                .antMatchers("/users/tasks/add", "/users/tasks", "/users/profile").hasRole(RoleEnum.USER.name())
                 .anyRequest()
                 .authenticated()
                 .and()

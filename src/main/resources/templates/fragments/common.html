@@ -45,6 +45,9 @@
                         <a class="nav-link" th:href="@{/users/tasks}">My Tasks</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" th:href="@{/users/profile}">My Profile</a>
+                    </li>
+                    <li class="nav-item">
                         <form th:action="@{/users/logout}" th:method="post">
                             <input id="logout" class="btn btn-link nav-link" type="submit" th:value="Logout">
                         </form>

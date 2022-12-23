@@ -9,8 +9,6 @@ import javax.persistence.Table;
 public class PictureEntity extends BaseEntity {
 
     @Column
-    private String title;
-    @Column
     private String url;
     @Column
     private String publicId;
@@ -18,14 +16,6 @@ public class PictureEntity extends BaseEntity {
     public PictureEntity() {
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public PictureEntity setTitle(String title) {
-        this.title = title;
-        return this;
-    }
 
     public String getUrl() {
         return url;

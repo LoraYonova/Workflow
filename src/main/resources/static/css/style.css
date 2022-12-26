@@ -514,36 +514,58 @@ svg {
     to {transform: translateX(-100%);}
 }
 
-body.body-profile {
-    background: #BA68C8;
-}
-
-.form-control:focus {
-    box-shadow: none;
-    border-color: #BA68C8;
-}
-
-.profile-button {
-    background: #BA68C8;
-    box-shadow: none;
+.profile-card {
     border: none;
-}
-
-.profile-button:hover {
-    background: #682773;
-}
-
-.profile-button:focus {
-    background: #682773;
-    box-shadow: none;
-}
-
-.profile-button:active {
-    background: #682773;
-    box-shadow: none;
-}
-
-.back:hover {
-    color: #682773;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
     cursor: pointer;
+    min-height: 65vh;
+}
+
+.profile-card:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background-color: #bbbef5;
+    transform: scaleY(1);
+    transition: all 0.5s;
+    transform-origin: bottom
+}
+
+.profile-card:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background-color: #0833e3;
+    transform: scaleY(0);
+    transition: all 0.5s;
+    transform-origin: bottom
+}
+
+.profile-card:hover::after {
+    transform: scaleY(1)
+}
+
+.fonts {
+    font-size: 20px
+}
+
+.social-list {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    padding: 0
+}
+
+.social-list li {
+    padding: 10px;
+    color: #0833e3;
+    font-size: 19px
 }

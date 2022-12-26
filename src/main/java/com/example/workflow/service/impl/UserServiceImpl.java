@@ -1,36 +1,46 @@
 package com.example.workflow.service.impl;
 
+import com.example.workflow.model.DTO.PictureDTO;
 import com.example.workflow.model.DTO.UserRegisterDTO;
+import com.example.workflow.model.entity.PictureEntity;
 import com.example.workflow.model.entity.UserEntity;
 import com.example.workflow.model.entity.RoleEntity;
 import com.example.workflow.model.entity.enums.RoleEnum;
+import com.example.workflow.model.view.UserView;
 import com.example.workflow.repository.UserRepository;
 import com.example.workflow.repository.RoleRepository;
+import com.example.workflow.service.PictureService;
 import com.example.workflow.service.UserService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
 
+
+
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final PictureService pictureService;
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService workflowDetailService;
 
     public UserServiceImpl(UserRepository userRepository,
                            RoleRepository roleRepository,
-                           PasswordEncoder passwordEncoder,
+                           PictureService pictureService, PasswordEncoder passwordEncoder,
                            UserDetailsService workflowDetailService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.pictureService = pictureService;
         this.passwordEncoder = passwordEncoder;
         this.workflowDetailService = workflowDetailService;
     }
@@ -63,6 +73,33 @@ public class UserServiceImpl implements UserService {
             userRepository.save(user);
         }
     }
+
+    @Override
+    public UserView findByUsername(String username) {
+       return userRepository.findByUsername(username).map(userEntity -> {
+            UserView userView = new UserView();
+            userView.setUsername(userEntity.getUsername())
+                    .setId(userEntity.getId())
+                    .setFirstName(userEntity.getFirstName())
+                    .setLastName(userEntity.getLastName())
+                    .setEmail(userEntity.getEmail());
+            return userView;
+        }).get();
+
+    }
+
+    @Override
+    public void addProfilePicture(String name, PictureDTO pictureDTO) throws IOException {
+        UserEntity userEntity = userRepository.findByUsername(name).orElseThrow(() -> new UsernameNotFoundException("User not found."));
+
+        PictureEntity pictureEntity = pictureService.createPictureEntity(pictureDTO.getPicture());
+
+        pictureService.savePicture(pictureEntity);
+        userEntity.setPicture(pictureEntity);
+        userRepository.save(userEntity);
+
+    }
+
 
     @Override
     public void registerAndLoginUser(UserRegisterDTO userRegisterDTO) {

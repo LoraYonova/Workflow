@@ -26,17 +26,22 @@
         <div class="row d-flex justify-content-center">
             <div class="col-md-7">
                 <div class="profile-card p-3 py-4">
+                    <div th:object="${pictureDTO}" class="text-center mt-3">
+                        <th:block th:if="*{picture != null}">
+                            <img th:src="*{getPicture()}" width="100" class="rounded-circle">
+                        </th:block>
+                        <th:block th:if="*{picture == null}">
+                            <img th:src="@{/images/profile.webp}" width="100" class="rounded-circle">
+                            <form th:method="post" enctype="multipart/form-data">
+                                <input th:field="*{picture}" type="file" name="picture"
+                                       class="form-control form-control-sm">
+                                <input class="text-center" type="submit" value="Submit"/>
 
-                    <div class="text-center mt-3">
-                        <img th:src="@{/images/profile.webp}" width="100" class="rounded-circle">
-                        <form th:method="post" enctype="multipart/form-data">
-                            <input class="text-center" type="text" name="title"/><br/>
-                            <input class="text-center" type="file" name="picture"><br/>
-                            <input class="text-center" type="submit" value="Submit"/>
-                            <div class="text-center">
-                            </div>
-                        </form>
-<!--                        <span class="bg-secondary p-1 px-4 rounded text-white">Pro</span>-->
+                            </form>
+                        </th:block>
+
+                        </div>
+
                         <h5 th:text="|${profile.firstName}| + ' ' + |${profile.lastName}|" class="mt-4 mb-0">Full
                             name</h5>
                         <h5 th:text="${profile.username}" class="mt-2 mb-0">Username</h5>

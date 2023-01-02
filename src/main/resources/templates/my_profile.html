@@ -26,26 +26,26 @@
         <div class="row d-flex justify-content-center">
             <div class="col-md-7">
                 <div class="profile-card p-3 py-4">
-                    <div th:object="${pictureDTO}" class="text-center mt-3">
-                        <th:block th:if="*{picture != null}">
+                    <div class="text-center mt-3">
+                        <th:block th:if="${profile.picture != null}">
                             <img th:src="*{getPicture()}" width="100" class="rounded-circle">
                         </th:block>
                         <th:block th:if="*{picture == null}">
                             <img th:src="@{/images/profile.webp}" width="100" class="rounded-circle">
-                            <form th:method="post" enctype="multipart/form-data">
-                                <input th:field="*{picture}" type="file" name="picture"
-                                       class="form-control form-control-sm">
-                                <input class="text-center" type="submit" value="Submit"/>
+<!--                            <form th:method="post" enctype="multipart/form-data">-->
+<!--                                <input th:field="*{picture}" type="file" name="picture"-->
+<!--                                       class="form-control form-control-sm">-->
+<!--                                <input class="text-center" type="submit" value="Submit"/>-->
 
-                            </form>
+<!--                            </form>-->
                         </th:block>
 
                         </div>
 
-                        <h5 th:text="|${profile.firstName}| + ' ' + |${profile.lastName}|" class="mt-4 mb-0">Full
+                        <h5 th:text="|Full name:| + ' ' + |${profile.firstName}| + ' ' + |${profile.lastName}|" class=" text-center mt-4 mb-0">Full
                             name</h5>
-                        <h5 th:text="${profile.username}" class="mt-2 mb-0">Username</h5>
-                        <h5 th:text="${profile.email}" class="mt-2 mb-0">Email</h5>
+                        <h5 th:text="|Username:| + ' ' + |${profile.username}|" class="text-center mt-2 mb-0">Username</h5>
+                        <h5 th:text="|Email:| + ' ' + |${profile.email}|" class="text-center mt-2 mb-0">Email</h5>
                         <div class="px-4 mt-5">
                             <p class="fonts">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim et nostrum
                                 optio perferendis quam quod ratione rem sit soluta ut! A dolor laborum, maiores neque
@@ -57,8 +57,8 @@
                             <li><i class="fab fa-linkedin"></i></li>
                             <li><i class="fab fa-google"></i></li>
                         </ul>
-                        <div class="buttons">
-                            <button class="btn btn-outline-primary px-4">Back</button>
+                        <div class="buttons d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                            <button th:href="@{/users/profile/update}" class="btn btn-outline-primary px-4">Update</button>
                             <!--                            <button class="btn btn-primary px-4 ms-3">Contact</button>-->
                         </div>
                     </div>

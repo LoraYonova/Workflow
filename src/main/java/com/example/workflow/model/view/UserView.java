@@ -7,6 +7,7 @@ public class UserView {
     private String firstName;
     private String lastName;
     private String email;
+    private String picture;
 
     public UserView() {
     }
@@ -53,6 +54,15 @@ public class UserView {
 
     public UserView setEmail(String email) {
         this.email = email;
+        return this;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public UserView setPicture(String picture) {
+        this.picture = picture;
         return this;
     }
 }

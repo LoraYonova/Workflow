@@ -82,7 +82,8 @@ public class UserServiceImpl implements UserService {
                     .setId(userEntity.getId())
                     .setFirstName(userEntity.getFirstName())
                     .setLastName(userEntity.getLastName())
-                    .setEmail(userEntity.getEmail());
+                    .setEmail(userEntity.getEmail())
+                    .setPicture(null);
             return userView;
         }).get();
 

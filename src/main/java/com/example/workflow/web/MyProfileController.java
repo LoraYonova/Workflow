@@ -70,10 +70,7 @@ public class MyProfileController {
 
     }
 
-    @ModelAttribute
-    private PictureDTO pictureDTO() {
-        return new PictureDTO();
-    }
+
 
 
 }

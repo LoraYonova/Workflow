@@ -6,6 +6,7 @@ import com.example.workflow.model.entity.PictureEntity;
 import com.example.workflow.model.entity.UserEntity;
 import com.example.workflow.model.entity.RoleEntity;
 import com.example.workflow.model.entity.enums.RoleEnum;
+import com.example.workflow.model.service.UserServiceModel;
 import com.example.workflow.model.view.UserView;
 import com.example.workflow.repository.UserRepository;
 import com.example.workflow.repository.RoleRepository;
@@ -25,7 +26,6 @@ import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
-
 
 
     private final UserRepository userRepository;
@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserView findByUsername(String username) {
-       return userRepository.findByUsername(username).map(userEntity -> {
+        return userRepository.findByUsername(username).map(userEntity -> {
             UserView userView = new UserView();
             userView.setUsername(userEntity.getUsername())
                     .setId(userEntity.getId())
@@ -97,6 +97,19 @@ public class UserServiceImpl implements UserService {
 
         pictureService.savePicture(pictureEntity);
         userEntity.setPicture(pictureEntity);
+        userRepository.save(userEntity);
+
+    }
+
+    @Override
+    public void updateProfile(UserServiceModel userServiceModel, String username) {
+
+        UserEntity userEntity = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User with username " + username + "not exists."));
+
+        userEntity.setFirstName(userServiceModel.getFirstName())
+                .setLastName(userServiceModel.getLastName())
+                .setEmail(userServiceModel.getEmail());
+
         userRepository.save(userEntity);
 
     }

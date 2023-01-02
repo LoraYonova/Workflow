@@ -1,13 +1,17 @@
 package com.example.workflow.web;
 
-import com.example.workflow.model.DTO.PictureDTO;
+import com.example.workflow.model.DTO.UserUpdateProfileDTO;
 import com.example.workflow.model.entity.PictureEntity;
+import com.example.workflow.model.service.UserServiceModel;
+import com.example.workflow.model.view.UserView;
 import com.example.workflow.repository.PictureRepository;
 import com.example.workflow.service.CloudinaryService;
 import com.example.workflow.service.UserService;
 import com.example.workflow.service.impl.CloudinaryImage;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,12 +30,14 @@ public class MyProfileController {
     private final UserService userService;
     private final CloudinaryService cloudinaryService;
     private final PictureRepository pictureRepository;
+    private final ModelMapper modelMapper;
 
 
-    public MyProfileController(UserService userService, CloudinaryService cloudinaryService, PictureRepository pictureRepository) {
+    public MyProfileController(UserService userService, CloudinaryService cloudinaryService, PictureRepository pictureRepository, ModelMapper modelMapper) {
         this.userService = userService;
         this.cloudinaryService = cloudinaryService;
         this.pictureRepository = pictureRepository;
+        this.modelMapper = modelMapper;
     }
 
 
@@ -42,32 +48,43 @@ public class MyProfileController {
         return "my_profile";
     }
 
-    @GetMapping("/profile/add")
-    public String addPicture() {
-        return "my_profile";
+    @GetMapping("/profile/update")
+    public String profileUpdate(Principal principal, Model model) {
+        model.addAttribute("profile", userService.findByUsername(principal.getName()));
+        return "profile_update";
     }
 
+    @PostMapping("/profile/update")
+    public String profileEdit(@Valid UserUpdateProfileDTO userUpdateProfileDTO, BindingResult bindingResult,
+                              RedirectAttributes redirectAttributes, Principal principal) {
 
-    @PostMapping("/profile/add")
-    public String addPicture(@Valid PictureDTO pictureDTO, RedirectAttributes redirectAttributes, Principal principal) throws IOException {
+        UserView username = userService.findByUsername(principal.getName());
 
-        if (pictureDTO.getPicture().isEmpty()) {
-            redirectAttributes.addFlashAttribute("error", "Please select a picture");
-            return "redirect:";
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("userUpdateProfileDTO", userUpdateProfileDTO);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userUpdateProfileDTO", bindingResult);
+
+            return "redirect:/profile/update";
         }
 
-        userService.addProfilePicture(principal.getName(), pictureDTO);
+        userService.updateProfile(modelMapper.map(userUpdateProfileDTO, UserServiceModel.class), username.getUsername());
 
-
-        return "redirect:/users/profile";
+        return "redirect:/profile";
     }
 
-    private PictureEntity createPictureEntity(MultipartFile file, String title) throws IOException {
+
+
+    private PictureEntity createPictureEntity(MultipartFile file) throws IOException {
         CloudinaryImage upload = cloudinaryService.upload(file);
         return new PictureEntity()
                 .setPublicId(upload.getPublicId())
                 .setUrl(upload.getUrl());
 
+    }
+
+    @ModelAttribute
+    public UserUpdateProfileDTO userUpdateProfileDTO() {
+        return new UserUpdateProfileDTO();
     }
 
 

@@ -28,8 +28,9 @@
             <div class="col-md-7">
                 <div class="profile-card p-3 py-4">
                     <div class="text-center mt-3">
-                        <th:block th:if="${profile.picture != null}">
+                        <th:block th:if="*{picture != null}">
                             <img th:src="*{getPicture()}" width="100" class="rounded-circle">
+                            <a th:href="@{/users/profile/update/picture/delete}" class="btn btn-outline-primary px-4">Delete</a>
                         </th:block>
                         <th:block th:if="*{picture == null}">
                             <img th:src="@{/images/profile.webp}" width="100" class="rounded-circle">

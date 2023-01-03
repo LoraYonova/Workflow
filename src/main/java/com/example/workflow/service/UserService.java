@@ -20,5 +20,8 @@ public interface UserService {
     void updateProfile(UserServiceModel userServiceModel, String email);
 
     UserServiceModel findUser(String username);
+
+    void deletePicture(String name);
 }
+
 

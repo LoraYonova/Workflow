@@ -10,4 +10,6 @@ public interface PictureService {
     void savePicture(PictureEntity picture);
 
     PictureEntity createPictureEntity(MultipartFile picture) throws IOException;
+
+    void delete(String id);
 }

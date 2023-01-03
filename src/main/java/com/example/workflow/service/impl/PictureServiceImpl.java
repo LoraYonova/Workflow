@@ -35,4 +35,9 @@ public class PictureServiceImpl implements PictureService {
         return pictureEntity;
 
     }
+
+    @Override
+    public void delete(String id) {
+        pictureRepository.deleteByPublicId(id);
+    }
 }

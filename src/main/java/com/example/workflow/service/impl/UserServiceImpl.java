@@ -10,6 +10,7 @@ import com.example.workflow.model.service.UserServiceModel;
 import com.example.workflow.model.view.UserView;
 import com.example.workflow.repository.UserRepository;
 import com.example.workflow.repository.RoleRepository;
+import com.example.workflow.service.CloudinaryService;
 import com.example.workflow.service.PictureService;
 import com.example.workflow.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -34,17 +35,19 @@ public class UserServiceImpl implements UserService {
     private final PictureService pictureService;
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService workflowDetailService;
+    private final CloudinaryService cloudinaryService;
     private final ModelMapper modelMapper;
 
     public UserServiceImpl(UserRepository userRepository,
                            RoleRepository roleRepository,
                            PictureService pictureService, PasswordEncoder passwordEncoder,
-                           UserDetailsService workflowDetailService, ModelMapper modelMapper) {
+                           UserDetailsService workflowDetailService, CloudinaryService cloudinaryService, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.pictureService = pictureService;
         this.passwordEncoder = passwordEncoder;
         this.workflowDetailService = workflowDetailService;
+        this.cloudinaryService = cloudinaryService;
         this.modelMapper = modelMapper;
     }
 
@@ -79,16 +82,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserView findByUsername(String username) {
-        return userRepository.findByUsername(username).map(userEntity -> {
-            UserView userView = new UserView();
-            userView.setUsername(userEntity.getUsername())
-                    .setId(userEntity.getId())
-                    .setFirstName(userEntity.getFirstName())
-                    .setLastName(userEntity.getLastName())
-                    .setEmail(userEntity.getEmail())
-                    .setPicture(userEntity.getPicture().getUrl());
-            return userView;
-        }).get();
+        UserEntity userEntity = userRepository.findUserEntityByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not exists."));
+
+        return modelMapper.map(userEntity, UserView.class);
+
+//        return userRepository.findByUsername(username).map(userEntity -> {
+//            UserView userView = new UserView();
+//            userView.setUsername(userEntity.getUsername())
+//                    .setId(userEntity.getId())
+//                    .setFirstName(userEntity.getFirstName())
+//                    .setLastName(userEntity.getLastName())
+//                    .setEmail(userEntity.getEmail())
+//                    .setPicture(userEntity.getPicture().getUrl());
+//            return userView;
+//        }).get();
 
     }
 
@@ -123,6 +130,18 @@ public class UserServiceImpl implements UserService {
                 .findByUsername(username)
                 .map(userEntity -> modelMapper.map(userEntity, UserServiceModel.class))
                 .orElseThrow(() -> new UsernameNotFoundException("User with username " + username + " not exists."));
+
+    }
+
+    @Override
+    public void deletePicture(String name) {
+        UserEntity userEntity = userRepository.findByUsername(name).orElseThrow(() -> new UsernameNotFoundException("User not found."));
+
+        cloudinaryService.delete(userEntity.getPicture().getPublicId());
+        String publicId = userEntity.getPicture().getPublicId();
+        pictureService.delete(publicId);
+        userEntity.setPicture(null);
+        userRepository.save(userEntity);
 
     }
 

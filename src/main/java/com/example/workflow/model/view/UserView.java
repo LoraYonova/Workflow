@@ -8,6 +8,7 @@ public class UserView {
     private String lastName;
     private String email;
     private String picture;
+    private PictureView pictureView;
 
     public UserView() {
     }
@@ -63,6 +64,15 @@ public class UserView {
 
     public UserView setPicture(String picture) {
         this.picture = picture;
+        return this;
+    }
+
+    public PictureView getPictureView() {
+        return pictureView;
+    }
+
+    public UserView setPictureView(PictureView pictureView) {
+        this.pictureView = pictureView;
         return this;
     }
 }

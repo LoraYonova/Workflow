@@ -4,13 +4,13 @@ import com.example.workflow.model.DTO.PictureDTO;
 import com.example.workflow.model.DTO.UserUpdateProfileDTO;
 import com.example.workflow.model.entity.PictureEntity;
 import com.example.workflow.model.service.UserServiceModel;
-import com.example.workflow.model.view.UserView;
 import com.example.workflow.repository.PictureRepository;
 import com.example.workflow.service.CloudinaryService;
 import com.example.workflow.service.UserService;
 import com.example.workflow.service.impl.CloudinaryImage;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -85,7 +85,7 @@ public class MyProfileController {
 
         userService.addProfilePicture(principal.getName(), pictureDTO);
 
-        return "redirect:/profile";
+        return "redirect:/users/profile";
     }
 
     private PictureEntity createPictureEntity(MultipartFile file) throws IOException {
@@ -94,6 +94,13 @@ public class MyProfileController {
                 .setPublicId(upload.getPublicId())
                 .setUrl(upload.getUrl());
 
+    }
+
+    @Transactional
+    @GetMapping("/profile/update/picture/delete")
+    public String deletePicture(Principal principal) {
+        userService.deletePicture(principal.getName());
+        return "redirect:/users/profile";
     }
 
     @ModelAttribute

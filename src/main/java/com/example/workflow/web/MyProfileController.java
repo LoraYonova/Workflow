@@ -1,5 +1,6 @@
 package com.example.workflow.web;
 
+import com.example.workflow.model.DTO.PictureDTO;
 import com.example.workflow.model.DTO.UserUpdateProfileDTO;
 import com.example.workflow.model.entity.PictureEntity;
 import com.example.workflow.model.service.UserServiceModel;
@@ -58,7 +59,7 @@ public class MyProfileController {
     public String profileEdit(@Valid UserUpdateProfileDTO userUpdateProfileDTO, BindingResult bindingResult,
                               RedirectAttributes redirectAttributes, Principal principal) {
 
-        UserView username = userService.findByUsername(principal.getName());
+        UserServiceModel user = userService.findUser(principal.getName());
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("userUpdateProfileDTO", userUpdateProfileDTO);
@@ -67,12 +68,25 @@ public class MyProfileController {
             return "redirect:/profile/update";
         }
 
-        userService.updateProfile(modelMapper.map(userUpdateProfileDTO, UserServiceModel.class), username.getUsername());
+        userService.updateProfile(modelMapper.map(userUpdateProfileDTO, UserServiceModel.class), user.getEmail());
 
-        return "redirect:/profile";
+        return "redirect:/users/profile";
     }
 
 
+    @PostMapping("/profile/update/picture")
+    public String updatePicture(@Valid PictureDTO pictureDTO, RedirectAttributes redirectAttributes, Principal principal) throws IOException {
+
+        if (pictureDTO.getPicture().isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", "Please select a picture!");
+
+            return "redirect:/profile/update/picture";
+        }
+
+        userService.addProfilePicture(principal.getName(), pictureDTO);
+
+        return "redirect:/profile";
+    }
 
     private PictureEntity createPictureEntity(MultipartFile file) throws IOException {
         CloudinaryImage upload = cloudinaryService.upload(file);
@@ -85,6 +99,11 @@ public class MyProfileController {
     @ModelAttribute
     public UserUpdateProfileDTO userUpdateProfileDTO() {
         return new UserUpdateProfileDTO();
+    }
+
+    @ModelAttribute
+    public PictureDTO pictureDTO() {
+        return new PictureDTO();
     }
 
 

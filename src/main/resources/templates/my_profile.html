@@ -27,17 +27,11 @@
             <div class="col-md-7">
                 <div class="profile-card p-3 py-4">
                     <div class="text-center mt-3">
-                        <th:block th:if="${profile.picture != null}">
+                        <th:block th:if="*{picture != null}">
                             <img th:src="*{getPicture()}" width="100" class="rounded-circle">
                         </th:block>
                         <th:block th:if="*{picture == null}">
                             <img th:src="@{/images/profile.webp}" width="100" class="rounded-circle">
-<!--                            <form th:method="post" enctype="multipart/form-data">-->
-<!--                                <input th:field="*{picture}" type="file" name="picture"-->
-<!--                                       class="form-control form-control-sm">-->
-<!--                                <input class="text-center" type="submit" value="Submit"/>-->
-
-<!--                            </form>-->
                         </th:block>
 
                         </div>
@@ -58,7 +52,7 @@
                             <li><i class="fab fa-google"></i></li>
                         </ul>
                         <div class="buttons d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                            <button th:href="@{/users/profile/update}" class="btn btn-outline-primary px-4">Update</button>
+                            <a th:href="@{/users/profile/update}" class="btn btn-outline-primary px-4">Update</a>
                             <!--                            <button class="btn btn-primary px-4 ms-3">Contact</button>-->
                         </div>
                     </div>

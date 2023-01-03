@@ -31,7 +31,6 @@ public class PictureServiceImpl implements PictureService {
         PictureEntity pictureEntity = new PictureEntity();
 
         pictureEntity.setPublicId(upload.getPublicId());
-        pictureEntity.setPublicId(upload.getPublicId());
         pictureEntity.setUrl(upload.getUrl());
         return pictureEntity;
 

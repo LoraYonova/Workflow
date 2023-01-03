@@ -29,7 +29,6 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 
             try {
 
-
                 @SuppressWarnings("unchecked")
                 Map<String, String> uploadResult = cloudinary
                         .uploader()

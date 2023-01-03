@@ -12,6 +12,7 @@ import com.example.workflow.repository.UserRepository;
 import com.example.workflow.repository.RoleRepository;
 import com.example.workflow.service.PictureService;
 import com.example.workflow.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,16 +34,18 @@ public class UserServiceImpl implements UserService {
     private final PictureService pictureService;
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService workflowDetailService;
+    private final ModelMapper modelMapper;
 
     public UserServiceImpl(UserRepository userRepository,
                            RoleRepository roleRepository,
                            PictureService pictureService, PasswordEncoder passwordEncoder,
-                           UserDetailsService workflowDetailService) {
+                           UserDetailsService workflowDetailService, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.pictureService = pictureService;
         this.passwordEncoder = passwordEncoder;
         this.workflowDetailService = workflowDetailService;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -83,7 +86,7 @@ public class UserServiceImpl implements UserService {
                     .setFirstName(userEntity.getFirstName())
                     .setLastName(userEntity.getLastName())
                     .setEmail(userEntity.getEmail())
-                    .setPicture(null);
+                    .setPicture(userEntity.getPicture().getUrl());
             return userView;
         }).get();
 
@@ -102,15 +105,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateProfile(UserServiceModel userServiceModel, String username) {
+    public void updateProfile(UserServiceModel userServiceModel, String email) {
 
-        UserEntity userEntity = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User with username " + username + "not exists."));
+        UserEntity userEntity = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User with email " + email + "not exists."));
 
         userEntity.setFirstName(userServiceModel.getFirstName())
                 .setLastName(userServiceModel.getLastName())
                 .setEmail(userServiceModel.getEmail());
 
         userRepository.save(userEntity);
+
+    }
+
+    @Override
+    public UserServiceModel findUser(String username) {
+        return userRepository
+                .findByUsername(username)
+                .map(userEntity -> modelMapper.map(userEntity, UserServiceModel.class))
+                .orElseThrow(() -> new UsernameNotFoundException("User with username " + username + " not exists."));
 
     }
 

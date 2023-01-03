@@ -4,8 +4,6 @@ import com.example.workflow.model.DTO.PictureDTO;
 import com.example.workflow.model.DTO.UserRegisterDTO;
 import com.example.workflow.model.service.UserServiceModel;
 import com.example.workflow.model.view.UserView;
-import com.example.workflow.service.impl.CloudinaryImage;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -19,6 +17,8 @@ public interface UserService {
 
     void addProfilePicture(String name, PictureDTO pictureDTO) throws IOException;
 
-    void updateProfile(UserServiceModel userServiceModel, String username);
+    void updateProfile(UserServiceModel userServiceModel, String email);
+
+    UserServiceModel findUser(String username);
 }
 

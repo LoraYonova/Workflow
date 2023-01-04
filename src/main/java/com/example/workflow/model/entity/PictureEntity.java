@@ -8,7 +8,7 @@ import javax.persistence.Table;
 @Table(name = "pictures")
 public class PictureEntity extends BaseEntity {
 
-    @Column
+    @Column(nullable = true)
     private String url;
     @Column
     private String publicId;

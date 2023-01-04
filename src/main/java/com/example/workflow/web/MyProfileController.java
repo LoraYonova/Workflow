@@ -70,7 +70,7 @@ public class MyProfileController {
 
         userService.updateProfile(modelMapper.map(userUpdateProfileDTO, UserServiceModel.class), user.getEmail());
 
-        return "redirect:/users/profile";
+        return "redirect:/users/profile/";
     }
 
 
@@ -80,27 +80,27 @@ public class MyProfileController {
         if (pictureDTO.getPicture().isEmpty()) {
             redirectAttributes.addFlashAttribute("error", "Please select a picture!");
 
-            return "redirect:/profile/update/picture";
+            return "redirect:";
         }
 
         userService.addProfilePicture(principal.getName(), pictureDTO);
 
-        return "redirect:/users/profile";
+        return "redirect:/users/profile/";
     }
 
-    private PictureEntity createPictureEntity(MultipartFile file) throws IOException {
-        CloudinaryImage upload = cloudinaryService.upload(file);
-        return new PictureEntity()
-                .setPublicId(upload.getPublicId())
-                .setUrl(upload.getUrl());
-
-    }
+//    private PictureEntity createPictureEntity(MultipartFile file) throws IOException {
+//        CloudinaryImage upload = cloudinaryService.upload(file);
+//        return new PictureEntity()
+//                .setPublicId(upload.getPublicId())
+//                .setUrl(upload.getUrl());
+//
+//    }
 
     @Transactional
     @GetMapping("/profile/update/picture/delete")
     public String deletePicture(Principal principal) {
         userService.deletePicture(principal.getName());
-        return "redirect:/users/profile";
+        return "redirect:/users/profile/";
     }
 
     @ModelAttribute

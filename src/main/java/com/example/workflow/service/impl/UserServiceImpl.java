@@ -75,7 +75,6 @@ public class UserServiceImpl implements UserService {
                     .setEmail("lor4eto111@gmail.com")
                     .setPassword(passwordEncoder.encode("123456"))
                     .setRoles(Set.of(userRole));
-
             userRepository.save(user);
         }
     }
@@ -92,8 +91,8 @@ public class UserServiceImpl implements UserService {
 //                    .setId(userEntity.getId())
 //                    .setFirstName(userEntity.getFirstName())
 //                    .setLastName(userEntity.getLastName())
-//                    .setEmail(userEntity.getEmail())
-//                    .setPicture(userEntity.getPicture().getUrl());
+//                    .setEmail(userEntity.getEmail());
+//
 //            return userView;
 //        }).get();
 

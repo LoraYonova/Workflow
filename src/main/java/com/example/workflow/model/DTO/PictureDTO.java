@@ -4,6 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class PictureDTO {
 
+
     private MultipartFile picture;
 
 

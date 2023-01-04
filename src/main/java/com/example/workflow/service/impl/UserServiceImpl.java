@@ -81,28 +81,36 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserView findByUsername(String username) {
-        UserEntity userEntity = userRepository.findUserEntityByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not exists."));
-
-        return modelMapper.map(userEntity, UserView.class);
-
-//        return userRepository.findByUsername(username).map(userEntity -> {
-//            UserView userView = new UserView();
-//            userView.setUsername(userEntity.getUsername())
-//                    .setId(userEntity.getId())
-//                    .setFirstName(userEntity.getFirstName())
-//                    .setLastName(userEntity.getLastName())
-//                    .setEmail(userEntity.getEmail());
+//        UserEntity userEntity = userRepository
+//                .findUserEntityByUsername(username)
+//                .orElseThrow(() -> new UsernameNotFoundException("User not exists."));
 //
-//            return userView;
-//        }).get();
+//        return modelMapper.map(userEntity, UserView.class);
+
+        return userRepository.findUserEntityByUsername(username).map(userEntity -> {
+            UserView userView = new UserView();
+            userView.setUsername(userEntity.getUsername())
+                    .setId(userEntity.getId())
+                    .setFirstName(userEntity.getFirstName())
+                    .setLastName(userEntity.getLastName())
+                    .setEmail(userEntity.getEmail());
+
+            if (userEntity.getPicture() != null) {
+                userView.setPicture(userEntity.getPicture().getUrl());
+            }
+
+            return userView;
+        }).get();
 
     }
 
+
+
     @Override
     public void addProfilePicture(String name, PictureDTO pictureDTO) throws IOException {
-        UserEntity userEntity = userRepository.findByUsername(name).orElseThrow(() -> new UsernameNotFoundException("User not found."));
+        var userEntity = userRepository.findUserEntityByUsername(name).orElseThrow(() -> new UsernameNotFoundException("User not found."));
 
-        PictureEntity pictureEntity = pictureService.createPictureEntity(pictureDTO.getPicture());
+        var pictureEntity = pictureService.createPictureEntity(pictureDTO.getPicture());
 
         pictureService.savePicture(pictureEntity);
         userEntity.setPicture(pictureEntity);
@@ -126,7 +134,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserServiceModel findUser(String username) {
         return userRepository
-                .findByUsername(username)
+                .findUserEntityByUsername(username)
                 .map(userEntity -> modelMapper.map(userEntity, UserServiceModel.class))
                 .orElseThrow(() -> new UsernameNotFoundException("User with username " + username + " not exists."));
 
@@ -134,7 +142,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deletePicture(String name) {
-        UserEntity userEntity = userRepository.findByUsername(name).orElseThrow(() -> new UsernameNotFoundException("User not found."));
+        UserEntity userEntity = userRepository.findUserEntityByUsername(name).orElseThrow(() -> new UsernameNotFoundException("User not found."));
 
         cloudinaryService.delete(userEntity.getPicture().getPublicId());
         String publicId = userEntity.getPicture().getPublicId();

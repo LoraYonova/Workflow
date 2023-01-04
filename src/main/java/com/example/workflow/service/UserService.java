@@ -22,6 +22,8 @@ public interface UserService {
     UserServiceModel findUser(String username);
 
     void deletePicture(String name);
+
+
 }
 
 

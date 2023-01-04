@@ -10,10 +10,10 @@ public class UserEntity extends BaseEntity {
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 
-    @Column(name = "first_name", nullable = false, unique = true)
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name", nullable = false, unique = true)
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
     @Column(nullable = false)
@@ -21,15 +21,6 @@ public class UserEntity extends BaseEntity {
 
     @OneToOne
     private PictureEntity picture;
-
-    public PictureEntity getPicture() {
-        return picture;
-    }
-
-    public UserEntity setPicture(PictureEntity picture) {
-        this.picture = picture;
-        return this;
-    }
 
     @Column(nullable = false)
     private String password;
@@ -91,6 +82,15 @@ public class UserEntity extends BaseEntity {
 
     public UserEntity setRoles(Set<RoleEntity> roles) {
         this.roles = roles;
+        return this;
+    }
+
+    public PictureEntity getPicture() {
+        return picture;
+    }
+
+    public UserEntity setPicture(PictureEntity picture) {
+        this.picture = picture;
         return this;
     }
 }

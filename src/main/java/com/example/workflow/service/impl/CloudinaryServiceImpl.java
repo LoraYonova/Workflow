@@ -34,8 +34,8 @@ public class CloudinaryServiceImpl implements CloudinaryService {
                         .uploader()
                         .upload(tempFile, Map.of());
 
-                String url = uploadResult.getOrDefault(URL, "https://www.cloudways.com/blog/wp-content/uploads/wordpress-404-error.jpg");
-                String publicId = uploadResult.getOrDefault(PUBLIC_ID, "");
+                String url = uploadResult.getOrDefault(URL, "");
+                String publicId = uploadResult.getOrDefault(PUBLIC_ID, "https://www.cloudways.com/blog/wp-content/uploads/wordpress-404-error.jpg");
 
 
                 return new CloudinaryImage().setPublicId(publicId).setUrl(url);

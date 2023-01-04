@@ -8,6 +8,7 @@ public class UserView {
     private String lastName;
     private String email;
     private String picture;
+
     private PictureView pictureView;
 
     public UserView() {

@@ -19,7 +19,7 @@ public class WorkflowDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username)
+        return userRepository.findUserEntityByUsername(username)
                 .map(user -> new WorkflowDetail(
                         user.getUsername(),
                         user.getPassword(),

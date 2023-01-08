@@ -34,6 +34,11 @@ cloudinary:
 #    init:
 #      mode: always
 
+mail:
+  host: "localhost"
+  port: 1025
+  username: "workflow@workflow.com"
+  password: ""
 
 logging:
   level:

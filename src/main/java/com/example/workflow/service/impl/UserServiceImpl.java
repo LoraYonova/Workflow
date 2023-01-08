@@ -2,7 +2,6 @@ package com.example.workflow.service.impl;
 
 import com.example.workflow.model.DTO.PictureDTO;
 import com.example.workflow.model.DTO.UserRegisterDTO;
-import com.example.workflow.model.entity.PictureEntity;
 import com.example.workflow.model.entity.UserEntity;
 import com.example.workflow.model.entity.RoleEntity;
 import com.example.workflow.model.entity.enums.RoleEnum;
@@ -24,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Set;
 
 @Service
@@ -37,11 +37,12 @@ public class UserServiceImpl implements UserService {
     private final UserDetailsService workflowDetailService;
     private final CloudinaryService cloudinaryService;
     private final ModelMapper modelMapper;
+    private final EmailService emailService;
 
     public UserServiceImpl(UserRepository userRepository,
                            RoleRepository roleRepository,
                            PictureService pictureService, PasswordEncoder passwordEncoder,
-                           UserDetailsService workflowDetailService, CloudinaryService cloudinaryService, ModelMapper modelMapper) {
+                           UserDetailsService workflowDetailService, CloudinaryService cloudinaryService, ModelMapper modelMapper, EmailService emailService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.pictureService = pictureService;
@@ -49,6 +50,7 @@ public class UserServiceImpl implements UserService {
         this.workflowDetailService = workflowDetailService;
         this.cloudinaryService = cloudinaryService;
         this.modelMapper = modelMapper;
+        this.emailService = emailService;
     }
 
     @Override
@@ -154,7 +156,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void registerAndLoginUser(UserRegisterDTO userRegisterDTO) {
+    public void registerAndLoginUser(UserRegisterDTO userRegisterDTO, Locale locale) {
         UserEntity userEntity = new UserEntity()
                 .setUsername(userRegisterDTO.getUsername())
                 .setFirstName(userRegisterDTO.getFirstName())
@@ -164,6 +166,8 @@ public class UserServiceImpl implements UserService {
                 .setRoles(Set.of(roleRepository.findByRole(RoleEnum.USER)));
 
         userRepository.save(userEntity);
+
+        emailService.sendRegistrationEmail(userEntity.getEmail(), userEntity.getFirstName() + " " + userEntity.getLastName(), locale);
 
         UserDetails userDetails = workflowDetailService.loadUserByUsername(userEntity.getUsername());
 

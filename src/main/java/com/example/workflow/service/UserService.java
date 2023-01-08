@@ -6,9 +6,10 @@ import com.example.workflow.model.service.UserServiceModel;
 import com.example.workflow.model.view.UserView;
 
 import java.io.IOException;
+import java.util.Locale;
 
 public interface UserService {
-    void registerAndLoginUser(UserRegisterDTO userRegisterDTO);
+    void registerAndLoginUser(UserRegisterDTO userRegisterDTO, Locale locale);
 
     void initializeAdmin();
 

@@ -1,6 +1,5 @@
 package com.example.workflow.service.impl;
 
-import com.example.workflow.service.EmailService;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -13,13 +12,13 @@ import javax.mail.internet.MimeMessage;
 import java.util.Locale;
 
 @Service
-public class EmailServiceImpl implements EmailService {
+public class EmailService {
 
     private final TemplateEngine templateEngine;
     private final MessageSource messageSource;
     private final JavaMailSender javaMailSender;
 
-    public EmailServiceImpl(TemplateEngine templateEngine, MessageSource messageSource, JavaMailSender javaMailSender) {
+    public EmailService(TemplateEngine templateEngine, MessageSource messageSource, JavaMailSender javaMailSender) {
         this.templateEngine = templateEngine;
         this.messageSource = messageSource;
         this.javaMailSender = javaMailSender;

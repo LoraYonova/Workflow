@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -17,9 +19,11 @@ import javax.validation.Valid;
 public class RegisterController {
 
     private final UserService userService;
+    private LocaleResolver localeResolver;
 
-    public RegisterController(UserService userService) {
+    public RegisterController(UserService userService, LocaleResolver localeResolver) {
         this.userService = userService;
+        this.localeResolver = localeResolver;
     }
 
 
@@ -36,7 +40,8 @@ public class RegisterController {
     @PostMapping("/register")
     public String confirmRegister(@Valid UserRegisterDTO userRegisterDTO,
                                   BindingResult bindingResult,
-                                  RedirectAttributes redirectAttributes) {
+                                  RedirectAttributes redirectAttributes,
+                                  HttpServletRequest request) {
 
         if (bindingResult.hasErrors() || !userRegisterDTO.getPassword().equals(userRegisterDTO.getConfirmPassword())) {
             redirectAttributes.addFlashAttribute("userRegisterDTO", userRegisterDTO);
@@ -45,7 +50,7 @@ public class RegisterController {
             return "/register";
         }
 
-        userService.registerAndLoginUser(userRegisterDTO);
+        userService.registerAndLoginUser(userRegisterDTO, localeResolver.resolveLocale(request));
         return "redirect:/";
     }
 }

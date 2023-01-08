@@ -40,6 +40,10 @@ public class EmailService {
         }
     }
 
+    private String getEmailSubject(Locale preferredLocale) {
+        return messageSource.getMessage("registration_subject", new Object[0], preferredLocale);
+    }
+
     private String generateMessageContent(Locale preferredLocale, String userName) {
         Context context = new Context();
         context.setLocale(preferredLocale);
@@ -47,9 +51,6 @@ public class EmailService {
         return templateEngine.process("email/registration", context);
     }
 
-    private String getEmailSubject(Locale preferredLocale) {
-        return messageSource.getMessage("registration_subject", new Object[0], preferredLocale);
-    }
 
 
 

@@ -70,11 +70,11 @@
             <version>1.32.2</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-configuration-processor</artifactId>-->
+<!--            <optional>true</optional>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -86,8 +86,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
-<!--            <version>2.7.2</version>-->
+
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.jspringbot</groupId>-->
+<!--            <artifactId>jspringbot-i18n</artifactId>-->
+<!--            <version>1.9</version>-->
+<!--        </dependency>-->
 
     </dependencies>
 

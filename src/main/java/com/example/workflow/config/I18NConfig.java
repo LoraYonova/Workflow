@@ -19,7 +19,7 @@ public class I18NConfig {
     }
 
     @Bean
-    LocaleChangeInterceptor localeChangeInterceptor() {
+    public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor changeInterceptor = new LocaleChangeInterceptor();
         changeInterceptor.setParamName("lang");
         return changeInterceptor;

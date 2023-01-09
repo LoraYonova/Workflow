@@ -12,17 +12,17 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 public class I18NConfig {
 
     @Bean
-    public LocaleResolver localResolver() {
-        CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
-        cookieLocaleResolver.setCookieName("lang");
-        return cookieLocaleResolver;
+    public LocaleResolver localeResolver() {
+        CookieLocaleResolver clr = new CookieLocaleResolver();
+        clr.setCookieName("lang");
+        return clr;
     }
 
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
-        LocaleChangeInterceptor changeInterceptor = new LocaleChangeInterceptor();
-        changeInterceptor.setParamName("lang");
-        return changeInterceptor;
+        LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
+        lci.setParamName("lang");
+        return lci;
     }
 
     @Bean

@@ -19,7 +19,7 @@ import javax.validation.Valid;
 public class RegisterController {
 
     private final UserService userService;
-    private LocaleResolver localeResolver;
+    private final LocaleResolver localeResolver;
 
     public RegisterController(UserService userService, LocaleResolver localeResolver) {
         this.userService = userService;

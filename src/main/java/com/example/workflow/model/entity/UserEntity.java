@@ -1,6 +1,7 @@
 package com.example.workflow.model.entity;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,6 +28,9 @@ public class UserEntity extends BaseEntity {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<RoleEntity> roles;
+
+    @OneToMany(cascade = CascadeType.MERGE)
+    private List<TaskEntity> tasks;
 
     public UserEntity() {
     }
@@ -91,6 +95,15 @@ public class UserEntity extends BaseEntity {
 
     public UserEntity setPicture(PictureEntity picture) {
         this.picture = picture;
+        return this;
+    }
+
+    public List<TaskEntity> getTasks() {
+        return tasks;
+    }
+
+    public UserEntity setTasks(List<TaskEntity> tasks) {
+        this.tasks = tasks;
         return this;
     }
 }

@@ -1,6 +1,9 @@
 package com.example.workflow.model.DTO;
 
+import com.example.workflow.model.entity.enums.TaskEnum;
+
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class TaskDTO {
@@ -9,8 +12,8 @@ public class TaskDTO {
     @Size(min = 2, message = "Task name must be more than 2 characters")
     private String taskName;
 
-    @NotEmpty
-    private String taskEnum;
+    @NotNull
+    private TaskEnum taskEnum;
 
     public TaskDTO() {
     }
@@ -24,11 +27,11 @@ public class TaskDTO {
         return this;
     }
 
-    public String getTaskEnum() {
+    public TaskEnum getTaskEnum() {
         return taskEnum;
     }
 
-    public TaskDTO setTaskEnum(String taskEnum) {
+    public TaskDTO setTaskEnum(TaskEnum taskEnum) {
         this.taskEnum = taskEnum;
         return this;
     }

@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/users")
 public class TaskController {
 
-    @GetMapping("/tasks/add")
+    @GetMapping("/tasks")
     public String tasks() {
-        return "create_task";
+        return "my_task";
     }
 }

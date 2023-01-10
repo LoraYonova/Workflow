@@ -1,9 +1,12 @@
 package com.example.workflow.model.service;
 
+import com.example.workflow.model.entity.enums.TaskEnum;
+
 public class TaskServiceModel {
 
     private String taskName;
-    private String taskEnum;
+    private TaskEnum taskEnum;
+//    private Long userId;
 
     public TaskServiceModel() {
     }
@@ -17,12 +20,21 @@ public class TaskServiceModel {
         return this;
     }
 
-    public String getTaskEnum() {
+    public TaskEnum getTaskEnum() {
         return taskEnum;
     }
 
-    public TaskServiceModel setTaskEnum(String taskEnum) {
+    public TaskServiceModel setTaskEnum(TaskEnum taskEnum) {
         this.taskEnum = taskEnum;
         return this;
     }
+
+//    public Long getUserId() {
+//        return userId;
+//    }
+//
+//    public TaskServiceModel setUserId(Long userId) {
+//        this.userId = userId;
+//        return this;
+//    }
 }

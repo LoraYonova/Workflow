@@ -103,8 +103,14 @@
             </ul>
         </div>
     </div>
-    <div class="page-content">
+    <div th:object="${profile}" class="page-content">
         <div class="header">Today Tasks</div>
+        <th:block th:if="*{picture != null}">
+            <img th:src="*{picture}" width="100" class="rounded-circle">
+        </th:block>
+        <th:block th:if="*{picture == null}">
+            <img th:src="@{/images/profile.webp}" width="100" class="rounded-circle">
+        </th:block>
         <div class="content-categories">
             <div class="label-wrapper">
                 <input class="nav-item" name="nav" type="radio" id="opt-1">
@@ -124,11 +130,11 @@
 <!--            </div>-->
         </div>
         <div class="tasks-wrapper">
-            <div class="task">
-                <input class="task-item" name="task" type="checkbox" id="item-1" checked>
-                <label for="item-1">
-                    <span class="label-text">Dashboard Design Implementation</span>
-                </label>
+            <div th:each="t : ${tasks}" th:object="${t}" class="task">
+<!--                <input class="task-item" name="task" type="checkbox" id="item-1" checked>-->
+<!--                <label for="item-1">-->
+                    <span th:text="*{taskName}" class="label-text">Dashboard Design Implementation</span>
+<!--                </label>-->
                 <div class="d-flex flex-row justify-content-end mb-1">
                     <a href="#!" class="text-info" data-mdb-toggle="tooltip" title="Edit todo"><i
                             class="fas fa-pencil-alt me-3"></i></a>
@@ -171,26 +177,36 @@
                 </label>
                 <span class="tag review">In Review</span>
             </div>
-            <div class="header upcoming">Upcoming Tasks</div>
-            <div class="pb-2">
+            <div class="header upcoming">Create Tasks</div>
+            <form class="pb-2" th:action="@{/users/tasks}" th:method="post" th:object="${taskDTO}">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-row align-items-center">
-                            <input type="text" class="form-control form-control-lg" id="exampleFormControlInput1"
+                            <input th:field="*{taskName}" name="taskName" type="text" class="form-control form-control-lg" id="exampleFormControlInput1"
                                    placeholder="Add new...">
-                            <select name="task" class="btn btn-primary">
-                                <option th:each="taskEnum : ${T(com.example.workflow.model.entity.enums.TaskEnum).values()}"
-                                        th:value="${taskEnum}" th:text="${taskEnum}"></option>
+                            <select th:field="*{taskEnum}"
+                                    th:errorclass="is-invalid"
+                                    id="taskEnum"
+                                    name="taskEnum"
+                                    class="custom-select"
+                                    aria-describedby="categoryHelpInline">
+                                <option value="" selected>Category</option>
+                                <option th:each="t : ${T(com.example.workflow.model.entity.enums.TaskEnum).values()}"
+                                        th:text="${t}"
+                                        th:value="${t}">
+                                </option>
+
                             </select>
-<!--                            <a href="#!" data-mdb-toggle="tooltip" title="Set due date"><i-->
-<!--                                    class="fas fa-calendar-alt fa-lg me-3"></i></a>-->
+                            <small id="categoryHelpInline" class="invalid-feedback bg-danger text-light rounded">
+                                You must select the category.
+                            </small>
                             <div>
-                                <button type="button" class="btn btn-primary">Add</button>
+                                <input type="submit" class="btn btn-info btn-lg" value="Add">
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
 <!--            <div class="task">-->
 <!--                <input class="task-item" name="task" type="checkbox" id="item-7">-->
 <!--                <label for="item-7">-->

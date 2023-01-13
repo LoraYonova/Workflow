@@ -3,8 +3,6 @@ package com.example.workflow.web;
 import com.example.workflow.model.DTO.PictureDTO;
 import com.example.workflow.model.DTO.UserUpdateProfileDTO;
 import com.example.workflow.model.service.UserServiceModel;
-import com.example.workflow.repository.PictureRepository;
-import com.example.workflow.service.CloudinaryService;
 import com.example.workflow.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
@@ -82,13 +80,6 @@ public class MyProfileController {
         return "redirect:/users/profile/";
     }
 
-//    private PictureEntity createPictureEntity(MultipartFile file) throws IOException {
-//        CloudinaryImage upload = cloudinaryService.upload(file);
-//        return new PictureEntity()
-//                .setPublicId(upload.getPublicId())
-//                .setUrl(upload.getUrl());
-//
-//    }
 
     @Transactional
     @GetMapping("/profile/update/picture/delete")

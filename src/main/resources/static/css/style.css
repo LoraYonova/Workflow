@@ -62,7 +62,7 @@ body {
 .nav div.main_list ul li a {
     text-decoration: none;
     color: #000;
-    line-height: 65px;
+    line-height: 35px;
     font-size: 1.7rem;
 }
 
@@ -73,7 +73,7 @@ body {
 .nav div.main_list ul li #logout {
     text-decoration: none;
     color: #000;
-    line-height: 65px;
+    line-height: 35px;
     font-size: 1.7rem;
 }
 
@@ -518,9 +518,10 @@ svg {
     border: none;
     position: relative;
     overflow: hidden;
-    border-radius: 8px;
+    border-radius: 70px;
     cursor: pointer;
     min-height: 65vh;
+    padding-top: 5.5rem!important;
 }
 
 .profile-card:before {

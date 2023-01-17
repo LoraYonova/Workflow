@@ -2,11 +2,16 @@ package com.example.workflow.model.service;
 
 import com.example.workflow.model.entity.enums.TaskEnum;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 public class TaskServiceModel {
 
     private String taskName;
     private TaskEnum taskEnum;
-//    private Long userId;
+    private LocalDate date;
+    private LocalTime time;
 
     public TaskServiceModel() {
     }
@@ -29,12 +34,21 @@ public class TaskServiceModel {
         return this;
     }
 
-//    public Long getUserId() {
-//        return userId;
-//    }
-//
-//    public TaskServiceModel setUserId(Long userId) {
-//        this.userId = userId;
-//        return this;
-//    }
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public TaskServiceModel setDate(LocalDate date) {
+        this.date = date;
+        return this;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public TaskServiceModel setTime(LocalTime time) {
+        this.time = time;
+        return this;
+    }
 }

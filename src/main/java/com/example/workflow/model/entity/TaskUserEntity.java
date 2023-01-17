@@ -1,6 +1,9 @@
 package com.example.workflow.model.entity;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -12,6 +15,12 @@ public class TaskUserEntity extends BaseEntity {
 
     @ManyToOne
     private TaskEntity task;
+
+    @Column(nullable = false)
+    private LocalDate date;
+
+    @Column(nullable = false)
+    private LocalTime time;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     private UserEntity userId;
@@ -34,6 +43,24 @@ public class TaskUserEntity extends BaseEntity {
 
     public TaskUserEntity setTask(TaskEntity task) {
         this.task = task;
+        return this;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public TaskUserEntity setDate(LocalDate date) {
+        this.date = date;
+        return this;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public TaskUserEntity setTime(LocalTime time) {
+        this.time = time;
         return this;
     }
 

@@ -15,6 +15,9 @@ import com.example.workflow.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -40,6 +43,8 @@ public class TaskUserServiceImpl implements TaskUserService {
         task.setUserId(modelMapper.map(userService.findByUsername(name), UserEntity.class));
         task.setTaskName(taskServiceModel.getTaskName());
         task.setTask(taskService.findByTask(taskServiceModel.getTaskEnum()));
+        task.setDate(LocalDate.now());
+        task.setTime(LocalTime.now());
 
 
         taskUserRepository.save(task);

@@ -2,9 +2,9 @@ package com.example.workflow.model.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 @Entity
 @Table(name = "tasks_users")
@@ -46,8 +46,8 @@ public class TaskUserEntity extends BaseEntity {
         return this;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public String getDate() {
+        return date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM));
     }
 
     public TaskUserEntity setDate(LocalDate date) {

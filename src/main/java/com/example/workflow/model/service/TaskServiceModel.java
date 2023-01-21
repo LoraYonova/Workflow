@@ -3,8 +3,9 @@ package com.example.workflow.model.service;
 import com.example.workflow.model.entity.enums.TaskEnum;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 public class TaskServiceModel {
 
@@ -34,8 +35,8 @@ public class TaskServiceModel {
         return this;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public String getDate() {
+        return date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM));
     }
 
     public TaskServiceModel setDate(LocalDate date) {
